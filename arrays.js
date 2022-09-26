@@ -112,7 +112,7 @@ for(let element of inventory){
         BMWAndAudi.push(element)
     }
 }
-console.log(BMWAndAudi);
+console.log(JSON.stringify(BMWAndAudi));
 
 
 
