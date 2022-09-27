@@ -67,9 +67,7 @@ let car_id = 33
 let year = inventory[car_id-1].car_year
 let make = inventory[car_id-1].car_make
 let model = inventory[car_id-1].car_model
-console.log("car with Id 33 is"+" " + make + " " + model + " " +"and manufacture in"+" "+ year);
-console.log(`Car 33 is a *car year goes here* *car make goes here* *car model goes here*` );
-
+console.log(`car with Id 33 is ${make} ${model} and manufacture in ${year}`);
 
 
 // ==== Challenge 2 ====
@@ -77,7 +75,7 @@ console.log(`Car 33 is a *car year goes here* *car make goes here* *car model go
 let lastCar = inventory.at(-1);
 let car_make = lastCar.car_make
 let car_model = lastCar.car_model
-console.log("car_make of last inventory is"+" "+ car_make +" "+"and car_model is"+ car_model);
+console.log(`car_make of last inventory is ${car_make} and car_model is ${car_model}`);
 
 // ==== Challenge 3 ====
 // The marketing team wants the car models listed alphabetically on the website. Sort all the car model names into alphabetical order and log the results in the console
@@ -98,8 +96,8 @@ console.log(carYears);
 // ==== Challenge 5 ====
 // The car lot manager needs to find out how many cars are older than the year 2000. Using the carYears array you just created, find out how many cars were made before the year 2000 by populating the array oldCars and logging it's length.
 let oldCars =[];
-for(let i = 0; i < inventory.length; i++){
-    if(inventory[i].car_year < 2000) oldCars.push(inventory[i])
+for(let elements of inventory){
+    if(elements.car_year < 2000) oldCars.push(elements)
 }
 console.log(oldCars); 
 
