@@ -29,7 +29,7 @@ function limitFunctionCallCount(cb, n) {
       counter--
     }else{
       console.log(`callback already invoked ${n} times`)
-    }
+    }`   `
   }
   return {invoke};
 }
@@ -45,5 +45,13 @@ function cacheFunction(cb) {
   // The cache should keep track of all arguments have been used to invoke this function.
   // If the returned function is invoked with arguments that it has already seen
   // then it should return the cached result and not invoke `cb` again.
-  // `cb` should only ever be invoked once for a given set of arguments.
+  // `cb` should only ever be invoked once for a given set of arguments.￼﻿
+  let cache = {}
+  return (i) => {
+    if(Object.prototype.hasOwnProperty.call(cache,i)){
+      return cache[i]
+    }
+    cache[i] = cb[i]
+    return cache[i]
+  }
 }
