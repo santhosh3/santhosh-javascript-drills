@@ -36,7 +36,26 @@ fs.readFile("./file/lipsum.txt", "utf8", (err,data) => {
                                         console.log(f)
                                         fs.writeFile("./file/newFile.txt", f, "utf8", (err) => {
                                             if(err) throw err
-                                            else console.log("done")
+                                            else{
+                                                fs.readFile("./file/newFile.txt","utf8",(err,data) => {
+                                                    if(err) throw err
+                                                    else{
+                                                        fs.readdir("./file",(err,files) => {
+                                                            if(err) throw err
+                                                            else{
+                                                                files.forEach((a) => {
+                                                                    files.forEach((a) => {
+                                                                        fs.unlink(`./file/${a}`, (err) => {
+                                                                            if(err) throw err
+                                                                            else console.log("files deleted successfully")
+                                                                        })
+                                                                    })
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            }
                                         })
                                     }
                                 })
