@@ -9,36 +9,71 @@
         5. Read the contents of filenames.txt and delete all the new files that are mentioned in that list simultaneously.
 */
 
-const fs = require("fs").promises
 
-let a = Math.round(Math.random()*10);
-const readfile = fs.readFile(`./lipsum.txt`, "utf-8")
+const fs= require("fs").promises
 
-readfile.then((data) => {
-    let data2 = data.toUpperCase();
-    fs.appendFile(`./content/uppercase${a}.txt`, data2, "utf-8");
-    return fs.appendFile(`./filenames.txt`, `uppercase${a}.txt\n`, "utf-8")
-}).then(() => {
-    fs.readFile(`./content/uppercase${a}.txt`, "utf-8").then((data) => {
-        let data3 = data.toLowerCase().split(".").join(".\n");
-        fs.appendFile(`./content/sentence${a}.txt`, data3, "utf-8");
-        return fs.appendFile(`./filenames.txt`, `sentence${a}.txt\n`, "utf-8")
-    }).then(() => {
-        fs.readFile(`./content/sentence${a}.txt`, "utf-8").then((data) => {
-            let data4 = data.split("\n").sort().join("\n");
-            fs.appendFile(`./content/sorted${a}.txt`, data4, "utf-8");
-            return fs.appendFile(`./filenames.txt`, `sorted${a}.txt\n`, "utf-8")
-        }).then(() => {
-            let final = fs.readFile(`./filenames.txt`, "utf-8").then((data) => {
-                let data5 = data.split("\n").slice(0, -1);
-                data5.forEach((x) => {
-                    fs.unlink(`./content/${x}`)
-                })
-            })
-            return final
-        })
+
+const readFile=fs.readFile(`${__dirname}/lipsum.txt`,"utf8")
+
+readFile
+.then((data)=>{
+    console.log("reading the file")
+    return fs.writeFile(`${__dirname}/upperCase.txt`,data.toUpperCase(),"utf8")
+})
+.then(()=>{
+    console.log("converted to upperCase")
+    return fs.writeFile(`${__dirname}/filenames.txt`,"upperCase.txt","utf8")
+})
+.then(()=>{
+    console.log("upperCase.txt name saved in filenames.txt")
+    return fs.readFile(`${__dirname}/upperCase.txt`,"utf8")
+})
+.then((data)=>{
+    console.log("reading is done from uppercase.txt")
+    return fs.writeFile(`${__dirname}/lowerCase.txt`,data.toLowerCase(),"utf8")
+})
+.then(()=>{
+    console.log("writing data into lowercase is done")
+    return fs.appendFile(`${__dirname}/filenames.txt`,"\nlowerCase.txt","utf8")
+})
+.then(()=>{
+    console.log("lowerCase.txt name saved in filenames.txt")
+    return fs.readFile(`${__dirname}/lowerCase.txt`,"utf8")
+})
+.then((data)=>{
+    console.log("reading data from lower case file is done")
+    let promiseArr=data.split(".").map(sen=> fs.appendFile(`${__dirname}/sentences.txt`,`${sen}.\n`,"utf8"))
+    Promise.all(promiseArr)
     
-    })
-}).catch((err) => {
-    console.log(err);
+})
+.then(()=>{
+    console.log("saved in sentences.txt")
+    return fs.appendFile(`${__dirname}/filenames.txt`,"\nsentences.txt","utf8")
+})
+.then(()=>{
+    console.log("sentences.txt file name saved in filenames.txt")
+    return fs.readFile(`${__dirname}/sentences.txt`,"utf8")
+})
+.then((data)=>{
+    console.log("reading data from sentences.txt is done")
+   
+    return fs.writeFile(`${__dirname}/sort.txt`,data.split("\n").sort().join("\n"),"utf8")
+})
+.then(()=>{
+    console.log("sort.txt file is created")
+    return fs.appendFile(`${__dirname}/filenames.txt`,"\nsort.txt","utf8")
+}).then(()=>{
+    console.log("sort.txt file is saved in filenames.txt")
+    return fs.readFile(`${__dirname}/filenames.txt`,"utf8")
+})
+.then((data)=>{
+    console.log("reading is succesfull from filenames.txt")
+    let deleteArr=data.split("\n").map(file=>fs.unlink(`${__dirname}/${file}`))
+    Promise.all(deleteArr)
+})
+.then(()=>{
+    console.log("all files deleted from filenames.txt")
+})
+.catch((err)=>{
+    console.error(err)
 })

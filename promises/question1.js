@@ -9,18 +9,32 @@
 
 const fs = require("fs").promises
 
-const randomFile = fs.readFile(`./sample1.json`, "utf-8");
+const directory = fs.mkdir(`${__dirname}/files`);
 
-    let a = Math.random()*10;
-    randomFile.then((data) => {
-    const rander = fs.writeFile(`./content/rander${a}.json`, data, "utf-8")
-    return rander
-}).catch(err => console.log(err))
-
-let deleteFiles = fs.readdir(`./content`);
-
-let b = deleteFiles.then((files) => {
-    return files.forEach((file) => {
-        fs.unlink(`./content/${file}`)
-    })
-}).catch(err => console.log(err))
+directory.then(() => {
+    console.log("file created");
+    return fs.readFile(`${__dirname}/sample.json`,"utf8");
+})
+.then((data) => {
+    console.log("read file succesfully")
+    let i = 5;
+    let array = []
+    while(i > 0){
+        array.push(fs.writeFile(`${__dirname}/files/file${Math.random()}.json`,data,"utf8"))
+        i--;
+    }
+    return Promise.all(array)
+})
+.then(() => {
+    console.log("Writing files completed");
+    return fs.readdir(`${__dirname}/files`,"utf8")
+})
+.then((data) => {
+   let array = []
+   data.forEach((file) => {
+       array.push(fs.unlink(`${__dirname}/files/${file}`))
+   })
+   return Promise.all(array)
+}).then(() => {
+    console.log("all files are deleted")
+}).catch(err => console.log(arr))

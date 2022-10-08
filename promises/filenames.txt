@@ -1,3 +1,2 @@
-uppercase3.txt
-sentence3.txt
-sorted3.txt
+upperCase.txt
+lowerCase.txt
