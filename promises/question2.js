@@ -66,14 +66,14 @@ readFile
     console.log("sort.txt file is saved in filenames.txt")
     return fs.readFile(`${__dirname}/filenames.txt`,"utf8")
 })
-.then((data)=>{
-    console.log("reading is succesfull from filenames.txt")
-    let deleteArr=data.split("\n").map(file=>fs.unlink(`${__dirname}/${file}`))
-    Promise.all(deleteArr)
-})
-.then(()=>{
-    console.log("all files deleted from filenames.txt")
-})
+// .then((data)=>{
+//     console.log("reading is succesfull from filenames.txt")
+//     let deleteArr=data.split("\n").map(file=>fs.unlink(`${__dirname}/${file}`))
+//     Promise.all(deleteArr)
+// })
+// .then(()=>{
+//     console.log("all files deleted from filenames.txt")
+// })
 .catch((err)=>{
     console.error(err)
 })

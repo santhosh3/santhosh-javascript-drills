@@ -1,2 +1,4 @@
 upperCase.txt
 lowerCase.txt
+sentences.txt
+sort.txt
