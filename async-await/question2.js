@@ -23,7 +23,7 @@ async function a(){
     console.log("Upper case name file is saved into fileNames");
     const u = await fs.readFile(`${__dirname}/upperCase.txt`,"utf8");
     console.log("reading the upperCase file");
-    const l = await fs.writeFile(`${__dirname}/lowerCase.txt`,u.toLowerCase(),"utf8");
+    const l = await fs.writeFile(`${__dirname}/lowerCase.txt`,(await u).toLowerCase(),"utf8");
     console.log("Writing data into lowerCase is done");
     await fs.appendFile(`${__dirname}/filesNames.txt`,"\nlowerCase.txt","utf8");
     console.log("Lower case file name is saved into fileNames.txt");
@@ -35,7 +35,7 @@ async function a(){
     console.log("sentenses.txt file is saved into fileName.txt");
     const sen = await fs.readFile(`${__dirname}/sentenses.txt`,"utf8");
     console.log("tenses file is created");
-    await fs.writeFile(`${__dirname}/sort.txt`, sen.split("\n").sort().join("\n"),"utf8");
+    await fs.writeFile(`${__dirname}/sort.txt`,(await sen).split("\n").sort().join("\n"),"utf8");
     console.log("sort.txt file is created");
     await fs.appendFile(`${__dirname}/filesNames.txt`,"\nsort.txt","utf8");
     console.log("Sort.txt file is saved into fileNames.txt");

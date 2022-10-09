@@ -23,11 +23,7 @@ async function a() {
     await Promise.all(arr)
     console.log("Writing files completed");
     let readDir = await fs.readdir(`${__dirname}/files`,"utf8");
-    let array = [];
-    readDir.forEach((file) => {
-        array.push(fs.unlink(`${__dirname}/files/${file}`))
-    })
-    await Promise.all(array)
+    readDir.forEach((file) => fs.unlink(`${__dirname}/files/${file}`))
     console.log("All files are deleted")
    }catch(err){
     console.log(err) 
